@@ -1,11 +1,6 @@
 # OpenAIPDF Telegram Chatbot 🤖
 
 An all-in-one AI PDF productivity chatbot for Telegram powered by [OpenAIPDF](https://openaipdf.com).
-
-- **Bot Handle:** [@OpenAIPDF_bot](https://t.me/OpenAIPDF_bot)
-- **Bot Token:** `8993850012:AAEkel2F0v3OKuJ0TvE6u6D3mRDNzthVMUA`
-- **Official Web App:** [openaipdf.com](https://openaipdf.com)
-
 ---
 
 ## ⚡ How to Keep the Bot Live (Never Need to Run It Again!)
