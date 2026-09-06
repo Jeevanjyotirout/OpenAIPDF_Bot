@@ -1,0 +1,15 @@
+services:
+  - type: worker
+    name: openaipdf-telegram-bot
+    runtime: python
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: python run_bot.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: BOT_USERNAME
+        value: OpenAIPDF_bot
+      - key: WEB_APP_URL
+        value: https://openaipdf.com
+      - key: MAX_FILE_SIZE_MB
+        value: "50"

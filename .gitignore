@@ -1,0 +1,29 @@
+# Temporary PDF and conversion files
+temp_files/
+*.pdf
+*.docx
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+
+# Runtime PID & logs
+*.pid
+*.log
+
+# Windows specific
+Desktop.ini
+Thumbs.db
+
+# Environment variables
+.env
