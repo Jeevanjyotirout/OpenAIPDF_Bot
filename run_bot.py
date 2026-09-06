@@ -37,6 +37,8 @@ def ensure_single_instance():
                 name = (proc.info.get('name') or '').lower()
                 if not name.startswith('python'):
                     continue
+                cmdline = proc.info.get('cmdline') or []
+                cmdline_str = " ".join(cmdline).lower()
                 if "run_bot.py" in cmdline_str or "bot.py" in cmdline_str:
                     logger.warning(f"Found conflicting bot instance (PID {pid}). Terminating it...")
                     proc.kill()
@@ -47,6 +49,35 @@ def ensure_single_instance():
         logger.warning(f"Process check warning: {e}")
 
 
+def start_health_check_server():
+    """Start lightweight HTTP server for Render Free Web Service health checks."""
+    port_str = os.getenv("PORT")
+    if not port_str:
+        return
+    try:
+        from http.server import HTTPServer, BaseHTTPRequestHandler
+        import threading
+
+        port = int(port_str)
+
+        class HealthHandler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                self.send_response(200)
+                self.send_header("Content-Type", "text/plain")
+                self.end_headers()
+                self.wfile.write(b"OpenAIPDF Bot is LIVE and running!\n")
+
+            def log_message(self, format, *args):
+                pass
+
+        server = HTTPServer(("0.0.0.0", port), HealthHandler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        logger.info(f"Render health check HTTP server running on port {port}")
+    except Exception as e:
+        logger.warning(f"Failed to start health check server: {e}")
+
+
 def main():
     print("=" * 60)
     print("  🚀 OPENAIPDF TELEGRAM BOT SERVICE")
@@ -55,6 +86,7 @@ def main():
     print("=" * 60)
     
     ensure_single_instance()
+    start_health_check_server()
     
     # Auto-retry loop in case of network disconnects
     max_restarts = 10

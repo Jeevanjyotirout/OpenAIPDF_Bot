@@ -1,12 +1,13 @@
 services:
-  - type: worker
+  - type: web
     name: openaipdf-telegram-bot
     runtime: python
+    plan: free
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt
     startCommand: python run_bot.py
     envVars:
       - key: TELEGRAM_BOT_TOKEN
-        sync: false
+        value: 8993850012:AAEkel2F0v3OKuJ0TvE6u6D3mRDNzthVMUA
       - key: BOT_USERNAME
         value: OpenAIPDF_bot
       - key: WEB_APP_URL
